@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "spyro",
+  "version": "${version}",
+  "name": "Spyro",
+  "description": "Play as Spyro with fire breath, charge, and glide abilities in Minecraft 1.21.11. Fan-made, non-commercial.",
+  "authors": ["Mosberg!"],
+  "contact": {
+    "homepage": "https://github.com/yourname/spyro-fabric-mod",
+    "sources": "https://github.com/yourname/spyro-fabric-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/spyro/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dk.mosberg.Spyro"],
+    "client": ["dk.mosberg.SpyroClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
