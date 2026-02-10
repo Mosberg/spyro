@@ -1,192 +1,169 @@
-# 🐉 Spyro in Minecraft — Fabric Mod (1.21.11)
+# Spyro in Minecraft - Fabric Mod (1.21.11)
 
-Bring the magic, charm, and fire‑breathing attitude of **Spyro the Dragon** into **Minecraft 1.21.11** with this Fabric‑based mod.
-This project recreates **Spyro**, his abilities, worlds, enemies, collectibles, and gameplay systems from the classic _Spyro the Dragon_ series, adapted faithfully into Minecraft’s sandbox environment.
+Bring Spyro-inspired movement and collectibles to Minecraft 1.21.11 using Fabric.
 
-This mod uses:
+This repo uses:
 
-- **Fabric Loader** & **Fabric API**
-- **Yarn mappings**
-- **Split‑sources project structure**
-- **Minecraft 1.21.11**
+- Fabric Loader and Fabric API
+- Yarn mappings
+- Split-sources project structure
+- Java 21
 
----
+## Scope
 
-## 🌀 Features
+This codebase currently targets a core Spyro 1-inspired mechanics slice on vanilla worlds. It is not a full content conversion (no custom worlds, mobs, bosses, or story).
 
-### 🐉 Play as Spyro
+## Features (Implemented)
 
-- Fully animated Spyro model
-- Glide, charge, and breathe fire
-- Unique Spyro‑style movement physics
-- Custom Spyro HUD elements (health gems, ability indicators)
+### Abilities
 
-### 🌍 Spyro Worlds
+- Fire breath (cooldown, range, damage, burn time)
+- Charge (knockback, damage, hit cooldown, charge speed)
+- Glide (max fall speed clamp)
+- Server-authoritative ability execution with client input sync
 
-Recreated and reimagined realms inspired by the Spyro franchise, including:
+### Collectibles
 
-- Artisan‑style hub worlds
-- Themed realms with puzzles, enemies, and collectibles
-- Portals connecting worlds, just like in the original games
+- 12 collectible items:
+  - Gems: red, green, yellow, orange, blue, purple
+  - Talismans: red, green, blue
+  - Orbs: dragonfly, crystal, shadow
+- Scoreboard-backed totals and weighted score
+- Auto-collection from inventory (configurable)
+- HUD display of counts and total score
 
-### 💎 Collectibles
+### Progression
 
-- **Gems** of all colors
-- **Dragon Statues** (rescuable dragons)
-- **Orbs**, **Eggs**, and other series‑specific items
-- Custom UI for tracking progress
+- Ability unlocks tied to gem totals (configurable)
+- Optional progression tracking
+- Player stats stored via attachments
 
-### 👾 Enemies & Bosses
+### HUD
 
-- Classic Spyro enemies with custom AI
-- Boss encounters adapted to Minecraft combat
-- Enemy behaviors inspired by the original games (charging, fleeing, ranged attacks)
+- Spyro HUD with icon, keybind hints, collectibles, score
+- Configurable offsets and display toggles
+- Optional realm label
 
-### 🔥 Spyro Abilities
+### Commands
 
-- Fire breath
-- Charge attack
-- Glide & hover
-- Swim (if applicable to your design)
-- Ability upgrades depending on world progression
+- /spyro, /spyro on, /spyro off, /spyro toggle
+- /spyro reload
+- /spyro give gems|talismans|orbs <amount>
+- /spyro unlock fire|charge|glide
+- /spyro reset
 
----
+## Default Controls
 
-## ✅ Current Playable Slice
+- Fire Breath: R
+- Charge: V
+- Glide: G
+- Menu: M
+- Stats: L
 
-This initial build includes a basic Spyro mode with core abilities:
+## Configuration
 
-- Fire breath burst
-- Charge sprint with knockback
-- Glide to slow falling
-- Simple HUD indicator
-- Gem items and a gem counter
+Config file: config/spyro.json
 
-Use `/spyro` (or `/spyro on|off|toggle`) to enable Spyro mode for your player.
+Ability tuning:
 
-### 🎮 Default Controls
+- fireCooldownTicks
+- fireRange
+- fireDamage
+- fireBurnSeconds
+- chargeDamage
+- chargeKnockback
+- chargeSpeed
+- chargeHitCooldownTicks
+- glideMaxFallSpeed
 
-- Fire Breath: **R**
-- Charge: **V**
-- Glide: **G**
+HUD and display:
 
-### ⚙️ Config
+- enableHudDisplay
+- enableStatsTracking
+- hudOffsetX
+- hudOffsetY
+- hudShowAbilityInfo
+- hudShowLevelName
 
-On first run, a config file is created at:
+Collectibles and gameplay:
 
-`config/spyro.json`
+- enableAutoCollect
+- enableProgressTracking
+- collectSoundVolume
+- enableParticles
+- difficultyMultiplier
 
-You can tune cooldowns, damage, glide speed, and gem values there.
+Progression defaults and unlocks:
 
-### 🧪 Items & Blocks
+- startWithFireBreath
+- startWithCharge
+- startWithGlide
+- unlockFireBreathGems
+- unlockChargeGems
+- unlockGlideGems
 
-- Spyro‑themed blocks
-- Portal frames
-- Gem clusters
-- Decorative world assets
-- Ability‑granting items
+Collectible values:
 
----
+- gems, talismans, orbs (maps keyed by item color/type)
+- gemValues (legacy compatibility)
 
-## 🛠️ Development Setup
+## Scoreboard Objectives
 
-This project uses **split‑sources** and **Yarn mappings** for clean organization and modding clarity.
+- spyro_gems
+- spyro_talismans
+- spyro_orbs
 
-### Requirements
+Weighted total score:
+
+Total = Gems + (Talismans _ 10) + (Orbs _ 8)
+
+## Build and Run
+
+Requirements:
 
 - JDK 21+
-- Gradle (wrapper included)
-- Fabric Loader & Fabric API
-- IntelliJ IDEA or VSCode recommended
 
-### Cloning the Project
+Commands:
 
-```bash
-git clone https://github.com/yourname/spyro-fabric-mod.git
-cd spyro-fabric-mod
+```
+./gradlew.bat build
+./gradlew.bat runClient
 ```
 
-### Importing Into Your IDE
-
-1. Open the project as a **Gradle** project.
-2. Let Gradle download dependencies.
-3. Run the `fabric-client` or `fabric-server` run configs.
-
-### Project Structure (Split‑Sources)
+## Project Structure (Split Sources)
 
 ```
 src/
- ├─ main/
- │   ├─ java/        # Core mod code
- │   ├─ resources/   # Assets, data, mixins
- ├─ client/
- │   ├─ java/        # Client-only code (renderers, models, HUD)
- │   ├─ resources/
- └─ generated/
-     └─ ...          # Data generation output
+  main/
+    java/        Core mod code
+    resources/   Assets and data
+  client/
+    java/        Client-only code (HUD, screens, keybinds)
+    resources/
 ```
 
----
+## Install (Players)
 
-## 📦 Installation (Players)
+1. Install Fabric Loader for Minecraft 1.21.11
+2. Install Fabric API
+3. Drop the mod jar into mods/
+4. Launch Minecraft
 
-1. Install **Fabric Loader** for Minecraft 1.21.11
-2. Install **Fabric API**
-3. Drop the mod `.jar` into your `mods/` folder
-4. Launch the game and enjoy exploring the Spyro universe
+## Compatibility
 
----
-
-## 🧩 Compatibility
-
-- Designed for **Fabric** only
+- Fabric only
 - Not compatible with Forge or NeoForge
-- Should work with most content mods unless they heavily modify player movement or dimension logic
+- May conflict with mods that heavily alter player movement or networking
 
----
+## Contributing
 
-## 📚 Lore & References
+PRs are welcome for:
 
-This mod draws inspiration from:
+- HUD and UI polish
+- Ability tuning and balance
+- Collectible and progression improvements
+- Localization and documentation
 
-- **Spyro the Dragon** series (Insomniac Games, Toys for Bob)
-- Spyro’s character design, abilities, and lore as described on:
-  - Wikipedia: [https://en.wikipedia.org/wiki/Spyro](https://en.wikipedia.org/wiki/Spyro)
-  - Spyro Wiki: `https://spyro.fandom.com/wiki/Spyro_the_Dragon_(character)` [(spyro.fandom.com in Bing)](https://www.bing.com/search?q="https%3A%2F%2Fspyro.fandom.com%2Fwiki%2FSpyro_the_Dragon_%28character%29")
+## License
 
-All rights to Spyro belong to their respective owners. This is a fan‑made, non‑commercial project.
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome!
-If you want to help with:
-
-- Modeling & animation
-- AI behavior
-- World design
-- Sound design
-- Code cleanup
-- Translations
-
-…feel free to open an issue or PR.
-
----
-
-## 📜 License
-
-Choose a license appropriate for your project (MIT, LGPL, ARR, etc.).
-Place the license text in `LICENSE`.
-
----
-
-## 🐲 Final Notes
-
-Spyro has always been about exploration, charm, and playful adventure.
-This mod aims to bring that same energy into Minecraft while staying true to both games’ identities.
-
-If you want, I can also generate:
-
-- A full `fabric.mod.json`
-- A roadmap or design document
+Choose a license appropriate for your project and place it in LICENSE.
