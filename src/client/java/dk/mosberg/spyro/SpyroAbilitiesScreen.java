@@ -35,25 +35,30 @@ public class SpyroAbilitiesScreen extends Screen {
         int x = this.width / 2 - 140;
         int y = 40;
 
-        drawAbility(context, "Fire Breath", "Key: R",
+        drawAbility(context, "Fire Breath", "Key: R", unlocks.fireBreathUnlocked,
                 "Breathe fire in a short cone to damage enemies.", x, y);
         y += 48;
 
-        drawAbility(context, "Charge", "Hold: V", "Charge forward to bash enemies with knockback.",
-                x, y);
+        drawAbility(context, "Charge", "Hold: V", unlocks.chargeUnlocked,
+                "Charge forward to bash enemies with knockback.", x, y);
         y += 48;
 
-        drawAbility(context, "Glide", "Hold: Space", "Reduce fall speed and glide forward.", x, y);
+        drawAbility(context, "Glide", "Hold: G", unlocks.glideUnlocked,
+                "Reduce fall speed and glide forward.", x, y);
     }
 
-    private void drawAbility(DrawContext context, String name, String keyInfo, String description,
-            int x, int y) {
-        context.drawTextWithShadow(this.textRenderer, name, x, y, 0xFFD86B);
-        context.drawTextWithShadow(this.textRenderer, keyInfo, x + 140, y, 0xAAAAAA);
+    private void drawAbility(DrawContext context, String name, String keyInfo, boolean unlocked,
+            String description, int x, int y) {
+        int nameColor = unlocked ? 0xFFD86B : 0x888888;
+        context.drawTextWithShadow(this.textRenderer, name, x, y, nameColor);
+        String status = unlocked ? keyInfo : "Locked";
+        int statusColor = unlocked ? 0xAAAAAA : 0xFF5555;
+        context.drawTextWithShadow(this.textRenderer, status, x + 140, y, statusColor);
 
         int lineY = y + 12;
         for (String line : splitDescription(description, 260)) {
-            context.drawTextWithShadow(this.textRenderer, line, x, lineY, 0xFFFFFF);
+            int descColor = unlocked ? 0xFFFFFF : 0xAAAAAA;
+            context.drawTextWithShadow(this.textRenderer, line, x, lineY, descColor);
             lineY += 10;
         }
     }

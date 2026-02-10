@@ -48,6 +48,10 @@ public final class SpyroCollectibles {
     }
 
     public static void collectFromInventory(ServerPlayerEntity player) {
+        SpyroConfig config = SpyroConfig.get();
+        if (!config.enableAutoCollect) {
+            return;
+        }
         PlayerInventory inventory = player.getInventory();
         int gems = 0;
         int talismans = 0;
@@ -85,8 +89,9 @@ public final class SpyroCollectibles {
         }
 
         if (gems > 0 || talismans > 0 || orbs > 0) {
+            float volume = Math.max(0.0f, Math.min(1.0f, config.collectSoundVolume));
             player.getEntityWorld().playSound(null, player.getBlockPos(),
-                    SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.6f, 1.2f);
+                    SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, volume, 1.2f);
         }
     }
 
@@ -110,6 +115,20 @@ public final class SpyroCollectibles {
 
         ScoreAccess score = scoreboard.getOrCreateScore(player, objective);
         score.setScore(score.getScore() + amount);
+
+        SpyroConfig config = SpyroConfig.get();
+        if (!config.enableStatsTracking) {
+            return;
+        }
+        SpyroPlayerStats stats = SpyroStatsAttachment.get(player);
+        switch (objectiveId) {
+            case GEMS_OBJECTIVE_ID -> stats.addGemsCollected(amount);
+            case TALISMANS_OBJECTIVE_ID -> stats.addTalismansCollected(amount);
+            case ORBS_OBJECTIVE_ID -> stats.addOrbsCollected(amount);
+            default -> {
+                return;
+            }
+        }
     }
 
     public static int getCollectibleCount(Scoreboard scoreboard, ScoreHolder holder,

@@ -178,3 +178,23 @@ This page serves as a remote index for Minecraft 1.21.11 Fabric mod development,
 [Data pack Fandom](https://minecraft.fandom.com/wiki/Data_pack)
 [Painting Fandom](https://minecraft.fandom.com/wiki/Painting)
 [Tutorials Fandom](https://minecraft.fandom.com/wiki/Tutorials)
+
+## Spyro
+
+[Spyro Wiki](https://en.wikipedia.org/wiki/Spyro)
+[Spyro the Dragon Fandom](<https://spyro.fandom.com/wiki/Spyro_the_Dragon_(character)>)
+[Spyro the Dragon](https://en.wikipedia.org/wiki/Spyro_the_Dragon)
+[Spyro 2: Ripto's Rage!](https://en.wikipedia.org/wiki/Spyro_2:_Ripto%27s_Rage!)
+[Spyro: Year of the Dragon](https://en.wikipedia.org/wiki/Spyro:_Year_of_the_Dragon)
+[Spyro: Season of Ice](https://en.wikipedia.org/wiki/Spyro:_Season_of_Ice)
+[Spyro 2: Season of Flame](https://en.wikipedia.org/wiki/Spyro_2:_Season_of_Flame)
+[Spyro: Enter the Dragonfly](https://en.wikipedia.org/wiki/Spyro:_Enter_the_Dragonfly)
+[Spyro: Attack of the Rhynocs](https://en.wikipedia.org/wiki/Spyro:_Attack_of_the_Rhynocs)
+[Spyro Orange: The Cortex Conspiracy](https://en.wikipedia.org/wiki/Spyro_Orange:_The_Cortex_Conspiracy)
+[Spyro: A Hero's Tail](https://en.wikipedia.org/wiki/Spyro:_A_Hero%27s_Tail)
+[Spyro: Ripto Quest](https://en.wikipedia.org/wiki/Spyro#Ripto_Quest)
+[Spyro: Shadow Legacy](https://en.wikipedia.org/wiki/Spyro:_Shadow_Legacy)
+[The Legend of Spyro: A New Beginning](https://en.wikipedia.org/wiki/The_Legend_of_Spyro:_A_New_Beginning)
+[The Legend of Spyro: The Eternal Night](https://en.wikipedia.org/wiki/The_Legend_of_Spyro:_The_Eternal_Night)
+[The Legend of Spyro: Dawn of the Dragon](https://en.wikipedia.org/wiki/The_Legend_of_Spyro:_Dawn_of_the_Dragon)
+[Spyro Reignited Trilogy](https://en.wikipedia.org/wiki/Spyro_Reignited_Trilogy)

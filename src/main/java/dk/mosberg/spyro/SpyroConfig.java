@@ -24,6 +24,7 @@ public final class SpyroConfig {
     public int fireBurnSeconds = 4;
     public float chargeDamage = 6.0f;
     public float chargeKnockback = 0.6f;
+    public float chargeSpeed = 0.45f;
     public int chargeHitCooldownTicks = 6;
     public double glideMaxFallSpeed = -0.08;
 
@@ -46,6 +47,14 @@ public final class SpyroConfig {
     public int collectSoundVolume = 1;
     public boolean enableParticles = true;
     public int difficultyMultiplier = 1;
+
+    // Progression Settings
+    public boolean startWithFireBreath = true;
+    public boolean startWithCharge = false;
+    public boolean startWithGlide = false;
+    public int unlockFireBreathGems = 0;
+    public int unlockChargeGems = 50;
+    public int unlockGlideGems = 120;
 
     // Legacy support
     public Map<String, Integer> gemValues = new HashMap<>();

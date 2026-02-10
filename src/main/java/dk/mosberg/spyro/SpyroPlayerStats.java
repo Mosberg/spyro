@@ -23,7 +23,7 @@ public class SpyroPlayerStats {
     private int totalOrbsCollected = 0;
     private int levelsCompleted = 0;
     private int enemiesDefeated = 0;
-    private SpyroAbilityUnlocks abilityUnlocks = new SpyroAbilityUnlocks();
+    private SpyroAbilityUnlocks abilityUnlocks = new SpyroAbilityUnlocks(SpyroConfig.get());
 
     public SpyroPlayerStats() {}
 
@@ -71,6 +71,15 @@ public class SpyroPlayerStats {
         return abilityUnlocks;
     }
 
+    public void resetToDefaults() {
+        totalGemsCollected = 0;
+        totalTalismansCollected = 0;
+        totalOrbsCollected = 0;
+        levelsCompleted = 0;
+        enemiesDefeated = 0;
+        abilityUnlocks.applyDefaults(SpyroConfig.get());
+    }
+
     public int getOverallProgress() {
         return Math.min(100, (totalGemsCollected / 100) + (levelsCompleted * 10));
     }
@@ -98,15 +107,21 @@ public class SpyroPlayerStats {
         totalOrbsCollected = tag.getInt("TotalOrbs").orElse(0);
         levelsCompleted = tag.getInt("LevelsCompleted").orElse(0);
         enemiesDefeated = tag.getInt("EnemiesDefeated").orElse(0);
+        SpyroConfig config = SpyroConfig.get();
 
         if (tag.contains("AbilityUnlocks")) {
             NbtCompound unlocks = tag.getCompound("AbilityUnlocks").orElse(new NbtCompound());
-            abilityUnlocks.fireBreathUnlocked = unlocks.getBoolean("Fire").orElse(false);
-            abilityUnlocks.chargeUnlocked = unlocks.getBoolean("Charge").orElse(false);
-            abilityUnlocks.glideUnlocked = unlocks.getBoolean("Glide").orElse(false);
+            abilityUnlocks.fireBreathUnlocked =
+                    unlocks.getBoolean("Fire").orElse(config.startWithFireBreath);
+            abilityUnlocks.chargeUnlocked =
+                    unlocks.getBoolean("Charge").orElse(config.startWithCharge);
+            abilityUnlocks.glideUnlocked =
+                    unlocks.getBoolean("Glide").orElse(config.startWithGlide);
             abilityUnlocks.flightUnlocked = unlocks.getBoolean("Flight").orElse(false);
             abilityUnlocks.timeSlowUnlocked = unlocks.getBoolean("TimeSlow").orElse(false);
             abilityUnlocks.superChargeUnlocked = unlocks.getBoolean("SuperCharge").orElse(false);
+        } else {
+            abilityUnlocks.applyDefaults(config);
         }
     }
 }

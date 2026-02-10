@@ -6,13 +6,28 @@ package dk.mosberg.spyro;
  */
 public class SpyroAbilityUnlocks {
     public boolean fireBreathUnlocked = true;
-    public boolean chargeUnlocked = true;
-    public boolean glideUnlocked = true;
+    public boolean chargeUnlocked = false;
+    public boolean glideUnlocked = false;
     public boolean flightUnlocked = false;
     public boolean timeSlowUnlocked = false;
     public boolean superChargeUnlocked = false;
 
-    public SpyroAbilityUnlocks() {}
+    public SpyroAbilityUnlocks() {
+        applyDefaults(SpyroConfig.get());
+    }
+
+    public SpyroAbilityUnlocks(SpyroConfig config) {
+        applyDefaults(config);
+    }
+
+    public void applyDefaults(SpyroConfig config) {
+        fireBreathUnlocked = config.startWithFireBreath;
+        chargeUnlocked = config.startWithCharge;
+        glideUnlocked = config.startWithGlide;
+        flightUnlocked = false;
+        timeSlowUnlocked = false;
+        superChargeUnlocked = false;
+    }
 
     public void unlockFireBreath() {
         fireBreathUnlocked = true;

@@ -4,6 +4,7 @@ import java.util.Objects;
 import org.lwjgl.glfw.GLFW;
 import dk.mosberg.spyro.SpyroClientNetworking;
 import dk.mosberg.spyro.SpyroCollectibles;
+import dk.mosberg.spyro.SpyroConfig;
 import dk.mosberg.spyro.SpyroMenuScreen;
 import dk.mosberg.spyro.SpyroNetworking;
 import dk.mosberg.spyro.SpyroPlayerStats;
@@ -101,6 +102,10 @@ public class SpyroClient implements ClientModInitializer {
         if (!player.getCommandTags().contains(Spyro.SPYRO_TAG)) {
             return;
         }
+        SpyroConfig config = SpyroConfig.get();
+        if (!config.enableHudDisplay) {
+            return;
+        }
 
         var scoreboard = world.getScoreboard();
         int gems = SpyroCollectibles.getGemCount(scoreboard, player);
@@ -108,25 +113,36 @@ public class SpyroClient implements ClientModInitializer {
         int orbs = SpyroCollectibles.getOrbCount(scoreboard, player);
         int totalScore = SpyroCollectibles.getTotalScore(scoreboard, player);
 
-        int x = 8;
-        int y = 8;
+        int x = config.hudOffsetX;
+        int y = config.hudOffsetY;
         drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, SPYRO_ICON, x, y, 0, 0, 16, 16, 16,
                 16);
         drawContext.drawTextWithShadow(client.textRenderer, Text.literal("Spyro Mode"), x + 20,
                 y + 4, 0xFFFA983A);
-        drawContext.drawTextWithShadow(client.textRenderer,
-                Text.literal("Fire: R  Charge: V  Glide: G"), x, y + 20, 0xFFE0E0E0);
+        if (config.hudShowAbilityInfo) {
+            drawContext.drawTextWithShadow(client.textRenderer,
+                    Text.literal("Fire: R  Charge: V  Glide: G"), x, y + 20, 0xFFE0E0E0);
+        }
 
+        int collectiblesY = config.hudShowAbilityInfo ? y + 34 : y + 20;
         // Collectibles display
         drawContext.drawTextWithShadow(client.textRenderer,
-                Text.translatable("text.spyro.gems", gems), x, y + 34, 0xFF8FE3FF);
+                Text.translatable("text.spyro.gems", gems), x, collectiblesY, 0xFF8FE3FF);
         drawContext.drawTextWithShadow(client.textRenderer,
-                Text.translatable("text.spyro.talismans", talismans), x, y + 46, 0xFFD4A5FF);
+                Text.translatable("text.spyro.talismans", talismans), x, collectiblesY + 12,
+                0xFFD4A5FF);
         drawContext.drawTextWithShadow(client.textRenderer,
-                Text.translatable("text.spyro.orbs", orbs), x, y + 58, 0xFF00D4FF);
+                Text.translatable("text.spyro.orbs", orbs), x, collectiblesY + 24, 0xFF00D4FF);
 
         // Total score
+        int scoreY = collectiblesY + 38;
         drawContext.drawTextWithShadow(client.textRenderer,
-                Text.translatable("text.spyro.score", totalScore), x, y + 72, 0xFFFFD700);
+                Text.translatable("text.spyro.score", totalScore), x, scoreY, 0xFFFFD700);
+
+        if (config.hudShowLevelName) {
+            String dimension = world.getRegistryKey().getValue().getPath();
+            drawContext.drawTextWithShadow(client.textRenderer, Text.literal("Realm: " + dimension),
+                    x, scoreY + 12, 0xFFBFBFBF);
+        }
     }
 }

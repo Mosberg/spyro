@@ -13,14 +13,15 @@ import net.minecraft.util.math.Vec3d;
 
 public class SpyroAbilities {
 
-    public static void apply(ServerPlayerEntity player, SpyroPlayerState state) {
-        if (state.consumeFireRequest()) {
+    public static void apply(ServerPlayerEntity player, SpyroPlayerState state,
+            SpyroAbilityUnlocks unlocks) {
+        if (unlocks.fireBreathUnlocked && state.consumeFireRequest()) {
             tryFireBreath(player, state);
         }
-        if (state.isCharging()) {
+        if (unlocks.chargeUnlocked && state.isCharging()) {
             applyCharge(player, state);
         }
-        if (state.isGliding()) {
+        if (unlocks.glideUnlocked && state.isGliding()) {
             applyGlide(player);
         }
     }
@@ -35,7 +36,9 @@ public class SpyroAbilities {
         Vec3d direction = player.getRotationVec(1.0f);
         Vec3d origin = new Vec3d(player.getX(), player.getY() + player.getStandingEyeHeight(),
                 player.getZ()).add(direction.multiply(0.5));
-        spawnFireParticles(player, origin, direction);
+        if (config.enableParticles) {
+            spawnFireParticles(player, origin, direction);
+        }
         ServerWorld serverWorld = (ServerWorld) player.getEntityWorld();
         serverWorld.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_BLAZE_SHOOT,
                 SoundCategory.PLAYERS, 0.8f, 1.2f);
@@ -45,6 +48,7 @@ public class SpyroAbilities {
         List<LivingEntity> targets = serverWorld.getEntitiesByClass(LivingEntity.class, box,
                 entity -> entity != player && entity.isAlive());
         DamageSource source = serverWorld.getDamageSources().playerAttack(player);
+        float fireDamage = config.fireDamage * Math.max(0, config.difficultyMultiplier);
         for (LivingEntity target : targets) {
             Vec3d toTarget = new Vec3d(target.getX(), target.getY() + target.getStandingEyeHeight(),
                     target.getZ()).subtract(origin);
@@ -57,7 +61,7 @@ public class SpyroAbilities {
                 continue;
             }
             target.setOnFireFor(config.fireBurnSeconds);
-            target.damage(serverWorld, source, config.fireDamage);
+            target.damage(serverWorld, source, fireDamage);
         }
     }
 
@@ -80,7 +84,7 @@ public class SpyroAbilities {
             return;
         }
         Vec3d forward = player.getRotationVec(1.0f).normalize();
-        player.addVelocity(forward.x * 0.45, 0.0, forward.z * 0.45);
+        player.addVelocity(forward.x * config.chargeSpeed, 0.0, forward.z * config.chargeSpeed);
         player.setSprinting(true);
 
         if (state.getChargeHitCooldown() > 0) {
@@ -92,8 +96,9 @@ public class SpyroAbilities {
                 entity -> entity != player && entity.isAlive());
         if (!targets.isEmpty()) {
             DamageSource source = serverWorld.getDamageSources().playerAttack(player);
+            float chargeDamage = config.chargeDamage * Math.max(0, config.difficultyMultiplier);
             for (LivingEntity target : targets) {
-                target.damage(serverWorld, source, config.chargeDamage);
+                target.damage(serverWorld, source, chargeDamage);
                 target.takeKnockback(config.chargeKnockback, forward.x, forward.z);
             }
             state.setChargeHitCooldown(config.chargeHitCooldownTicks);
