@@ -48,6 +48,13 @@ public final class SpyroConfig {
     public boolean enableParticles = true;
     public int difficultyMultiplier = 1;
 
+    // Planned Content Toggles
+    public boolean enableSpyroWorlds = false;
+    public boolean enableSpyroMobs = false;
+    public boolean enablePortals = false;
+    public boolean enableFlightLevels = false;
+    public boolean enableNpcHelpers = false;
+
     // Progression Settings
     public boolean startWithFireBreath = true;
     public boolean startWithCharge = false;
@@ -173,5 +180,11 @@ public final class SpyroConfig {
             gemValues.put("green", 2);
             gemValues.put("purple", 5);
         }
+
+        enableSpyroWorlds = false;
+        enableSpyroMobs = false;
+        enablePortals = false;
+        enableFlightLevels = false;
+        enableNpcHelpers = false;
     }
 }

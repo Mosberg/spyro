@@ -36,8 +36,8 @@ public class SpyroMenuScreen extends Screen {
                 .dimensions(centerX, 110, buttonWidth, buttonHeight).build());
 
         this.addDrawableChild(ButtonWidget.builder(Text.literal("§bSettings"), button -> {
-            /* TODO: Settings screen */}).dimensions(centerX, 140, buttonWidth, buttonHeight)
-                .build());
+            this.client.setScreen(new SpyroSettingsScreen(this));
+        }).dimensions(centerX, 140, buttonWidth, buttonHeight).build());
 
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Back"), button -> this.onClose())
                 .dimensions(centerX, this.height - 40, buttonWidth, buttonHeight).build());

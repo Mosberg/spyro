@@ -11,7 +11,7 @@ This repo uses:
 
 ## Scope
 
-This codebase currently targets a core Spyro 1-inspired mechanics slice on vanilla worlds. It is not a full content conversion (no custom worlds, mobs, bosses, or story).
+This codebase targets Spyro 1-3 mechanics with expandable new content and progression systems on vanilla worlds, plus new dimensions (flight levels). It is not a full story campaign, but a foundation for Spyro-inspired gameplay.
 
 ## Features (Implemented)
 
@@ -38,10 +38,12 @@ This codebase currently targets a core Spyro 1-inspired mechanics slice on vanil
 - Optional progression tracking
 - Player stats stored via attachments
 
-### HUD
+### UI & Settings
 
 - Spyro HUD with icon, keybind hints, collectibles, score
-- Configurable offsets and display toggles
+- Spyro Menu with Stats, Abilities, and Settings screens
+- Settings screen with ability tuning, HUD toggles, and planned content toggles
+- Configurable HUD offsets and display options
 - Optional realm label
 
 ### Commands
@@ -51,6 +53,11 @@ This codebase currently targets a core Spyro 1-inspired mechanics slice on vanil
 - /spyro give gems|talismans|orbs <amount>
 - /spyro unlock fire|charge|glide
 - /spyro reset
+
+### Blocks & Entities (NEW)
+
+- Spyro Portal block (scaffold for future dimension travel)
+- Rhynoc enemy mob (basic charging behavior framework)
 
 ## Default Controls
 
@@ -102,6 +109,14 @@ Progression defaults and unlocks:
 - unlockChargeGems
 - unlockGlideGems
 
+Planned content toggles:
+
+- enableSpyroWorlds (WIP)
+- enableSpyroMobs (WIP)
+- enablePortals (WIP)
+- enableFlightLevels (WIP)
+- enableNpcHelpers (WIP)
+
 Collectible values:
 
 - gems, talismans, orbs (maps keyed by item color/type)
@@ -135,12 +150,50 @@ Commands:
 ```
 src/
   main/
-    java/        Core mod code
+    java/        Core mod code (abilities, collectibles, commands, blocks, entities)
     resources/   Assets and data
   client/
     java/        Client-only code (HUD, screens, keybinds)
     resources/
 ```
+
+## Roadmap
+
+### Phase 1: Core Mechanics (Complete)
+
+- [x] Fire breath, charge, glide
+- [x] Gems, talismans, orbs
+- [x] Inventory auto-collection
+- [x] Ability unlocks via progression
+- [x] HUD and keybinds
+- [x] Stats and menu screens
+- [x] Commands and config
+
+### Phase 2: Expanded Content & UI (In Progress)
+
+- [x] Settings screen with toggles
+- [x] Portal block scaffold
+- [x] Enemy mob framework (Rhynoc)
+- [ ] Portal dimension travel
+- [ ] Flight levels dimension
+- [ ] Additional enemies and variants
+- [ ] Dragon rescue/statues
+- [ ] Time trials and challenges
+
+### Phase 3: World & Story (Planned)
+
+- [ ] Spyro-themed biomes and worlds
+- [ ] NPC helpers and dialogue
+- [ ] Worldgen populator for collectibles
+- [ ] Boss encounters
+- [ ] Advancement system
+
+### Phase 4: Polish & Expansions (Future)
+
+- [ ] Custom animations and models
+- [ ] Additional abilities (time slow, super charge, flight)
+- [ ] Spyro 2/3 mechanics (talismans, orbs, light gems)
+- [ ] Localization
 
 ## Install (Players)
 
@@ -163,7 +216,15 @@ PRs are welcome for:
 - Ability tuning and balance
 - Collectible and progression improvements
 - Localization and documentation
+- Enemy AI and mob variants
+- World design and content
 
 ## License
 
 Choose a license appropriate for your project and place it in LICENSE.
+
+## Links
+
+- Fabric Documentation: https://docs.fabricmc.net/develop/
+- Spyro Wiki: https://spyro.fandom.com/wiki/Spyro_the_Dragon_(character)
+- Minecraft Wiki: https://minecraft.wiki/

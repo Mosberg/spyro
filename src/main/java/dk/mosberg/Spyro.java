@@ -2,9 +2,11 @@ package dk.mosberg;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import dk.mosberg.spyro.SpyroBlocks;
 import dk.mosberg.spyro.SpyroCollectibles;
 import dk.mosberg.spyro.SpyroCommand;
 import dk.mosberg.spyro.SpyroConfig;
+import dk.mosberg.spyro.SpyroEntities;
 import dk.mosberg.spyro.SpyroItems;
 import dk.mosberg.spyro.SpyroNetworking;
 import dk.mosberg.spyro.SpyroStateManager;
@@ -26,6 +28,8 @@ public class Spyro implements ModInitializer {
     public void onInitialize() {
         SpyroConfig.load();
         SpyroItems.register();
+        SpyroBlocks.register();
+        SpyroEntities.register();
         SpyroCommand.register();
         SpyroNetworking.registerServer();
         ServerLifecycleEvents.SERVER_STARTED.register(SpyroCollectibles::ensureObjectives);
@@ -33,6 +37,6 @@ public class Spyro implements ModInitializer {
         ServerPlayConnectionEvents.DISCONNECT.register(
                 (handler, server) -> SpyroStateManager.remove(handler.getPlayer().getUuid()));
 
-        LOGGER.info("Spyro mod initialized with gems, talismans, and orbs.");
+        LOGGER.info("Spyro mod initialized with gems, talismans, orbs, portals, and enemies.");
     }
 }
